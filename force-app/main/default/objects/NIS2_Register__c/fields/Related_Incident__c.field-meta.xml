@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Related_Incident__c</fullName>
+    <externalId>false</externalId>
+    <label>Related Incident</label>
+    <required>false</required>
+    <type>Lookup</type>
+    <referenceTo>NIS2_Register__c</referenceTo>
+    <relationshipLabel>Related Decisions</relationshipLabel>
+    <relationshipName>Decisions</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

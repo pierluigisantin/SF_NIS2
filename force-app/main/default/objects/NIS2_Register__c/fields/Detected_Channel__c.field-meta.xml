@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Detected_Channel__c</fullName>
+    <externalId>false</externalId>
+    <label>Detected Channel</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Portal</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Manual</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

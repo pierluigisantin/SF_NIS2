@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Point_of_Contact_User__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description></description>
+    <externalId>false</externalId>
+    <label>Referente PoC (Utente)</label>
+    <referenceTo>User</referenceTo>
+    <relationshipLabel>Referente PoC</relationshipLabel>
+    <relationshipName>Point_of_Contact_User</relationshipName>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
