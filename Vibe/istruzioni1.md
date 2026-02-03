@@ -204,10 +204,14 @@ Alla fine della fase 3, fermati.
 ---
 
 # FASE 4 — Task e Contact: campi di supporto
-## 4.1 Task: campo categoria
-- `Task_Category__c` (Picklist): Training/Action/CallLog/Meeting/EvidenceRequest
-Path:
-- `objects/Task/fields/Task_Category__c.field-meta.xml`
+## 4.1 Activity: campo categoria (valido per Task + Event)
+> Nota: i **custom field** “di attività” non si creano su `Task` ma su **`Activity`** (oggetto base).  
+> Il campo sarà visibile su **Task** (e anche su **Event**); se serve solo su Task, nascondilo dai layout di Event.
+CREA IL CAMPO SU ACTIVITY!
+- `Task_Category__c` (Picklist): `Training` / `Action` / `CallLog` / `Meeting` / `EvidenceRequest`
+
+Path (CORRETTO):
+- `objects/Activity/fields/Task_Category__c.field-meta.xml`
 
 ## 4.2 Contact: flag membro CdA
 - `Is_Board_Member__c` (Checkbox) label ITA: `Membro CdA`

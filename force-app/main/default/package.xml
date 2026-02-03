@@ -4,5 +4,13 @@
         <members>NIS2_Register__c</members>
         <name>CustomObject</name>
     </types>
+    <types>
+        <members>Task</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Contact</members>
+        <name>CustomObject</name>
+    </types>
     <version>65.0</version>
 </Package>
