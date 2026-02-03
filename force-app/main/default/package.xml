@@ -4,13 +4,22 @@
         <members>NIS2_Register__c</members>
         <name>CustomObject</name>
     </types>
+<types>
+  <members>Activity.Task_Category__c</members>
+  <name>CustomField</name>
+</types>
     <types>
-        <members>Task</members>
-        <name>CustomObject</name>
+        <members>NIS2_Register__c.NotAdopted_Justification__c</members>
+        <members>NIS2_Register__c.Adoption_Date__c</members>
+        <name>CustomField</name>
     </types>
     <types>
-        <members>Contact</members>
-        <name>CustomObject</name>
+        <members>NIS2_Register__c.Comm_Req_Related_Record</members>
+        <members>NIS2_Register__c.DPOReq_Answered_Req_At</members>
+        <members>NIS2_Register__c.Dec_Rejected_Req_Approval_Comment</members>
+        <members>NIS2_Register__c.Measure_Adopted_Req_Adoption_Date</members>
+        <members>NIS2_Register__c.Meas_NotApplicable_Req_Justification</members>
+        <name>ValidationRule</name>
     </types>
     <version>65.0</version>
 </Package>

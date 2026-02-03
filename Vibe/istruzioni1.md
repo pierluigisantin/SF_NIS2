@@ -21,6 +21,7 @@ Lavoreremo **a fasi**: esegui **solo la fase che ti chiedo** e fermati, producen
    - comando deploy suggerito
    - mini-check UAT della sola fase
 4) Se una parte non è implementabile 100% in metadata, segnala il punto e applica il **fallback dichiarativo** previsto (quando la fase lo include).
+5) ricordati di tenetere aggiornato package.xml
 
 ---
 

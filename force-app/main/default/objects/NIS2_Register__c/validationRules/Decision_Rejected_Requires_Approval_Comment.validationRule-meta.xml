@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dec_Rejected_Req_Approval_Comment</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    ISPICKVAL(Approval_Status__c, "Rejected"),
+    ISBLANK(Approval_Comment__c)
+)</errorConditionFormula>
+    <errorMessage>When Approval Status is "Rejected", Approval Comment is required.</errorMessage>
+</ValidationRule>
