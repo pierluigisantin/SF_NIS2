@@ -71,7 +71,7 @@
         <type>Default</type>
     </actionOverrides>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>NIS2 Register object</description>
+    <description>Account object for NIS2</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -80,52 +80,21 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <label>NIS2 Register</label>
+    <label>Account</label>
     <nameField>
-        <displayFormat>NIS2-{000000}</displayFormat>
-        <label>NIS2 Register Name</label>
-        <type>AutoNumber</type>
+        <label>Account Name</label>
+        <type>Text</type>
     </nameField>
-    <pluralLabel>NIS2 Registers</pluralLabel>
+    <pluralLabel>Accounts</pluralLabel>
     
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Consonant</startsWith>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
-        <fullName>Communication</fullName>
+        <fullName>NIS2_Entity</fullName>
         <active>true</active>
-        <label>Communication</label>
-        <layout>NIS2_Register__c-NIS2 Communication Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Decision</fullName>
-        <active>true</active>
-        <label>Decision</label>
-        <layout>NIS2_Register__c-NIS2 Decision Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>DPORequest</fullName>
-        <active>true</active>
-        <label>DPO Request</label>
-        <layout>NIS2_Register__c-NIS2 DPO Request Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Incident</fullName>
-        <active>true</active>
-        <label>Incident</label>
-        <layout>NIS2_Register__c-NIS2 Incident Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Measure</fullName>
-        <active>true</active>
-        <label>Measure</label>
-        <layout>NIS2_Register__c-NIS2 Measure Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Risk</fullName>
-        <active>true</active>
-        <label>Risk</label>
-        <layout>NIS2_Register__c-NIS2 Risk Layout</layout>
+        <label>Ente NIS2</label>
+        <layout>Account-NIS2 Entity Layout</layout>
     </recordTypes>
 </CustomObject>

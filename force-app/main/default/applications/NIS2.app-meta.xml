@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0F1922</headerColor>
+        <logo>ChatGPT_Image_Feb_3_2026_04_28_59_P</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>true</shouldOverrideOrgTheme>
+    </brand>
+    <description>Gestione della NIS2</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>NIS2</label>
+    <navType>Console</navType>
+    <tabs>standard-Account</tabs>
+    <tabs>NIS2_Register__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>NIS2_UtilityBar</utilityBar>
+    <workspaceConfig>
+        <mappings>
+            <tab>NIS2_Register__c</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-Account</tab>
+        </mappings>
+    </workspaceConfig>
+</CustomApplication>

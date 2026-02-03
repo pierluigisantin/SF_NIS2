@@ -14,12 +14,21 @@
         <name>CustomField</name>
     </types>
     <types>
-        <members>NIS2_Register__c.Comm_Req_Related_Record</members>
         <members>NIS2_Register__c.DPORequest_Answered_Requires_Ans</members>
         <members>NIS2_Register__c.Dec_Rejected_Req_Approval_Comment</members>
         <members>NIS2_Register__c.Measure_Adopted_Req_Adoption_Date</members>
         <members>NIS2_Register__c.Meas_NotApplicable_Req_Justification</members>
         <name>ValidationRule</name>
+    </types>
+    <types>
+        <members>NIS2_ACN_Reminder_Scheduled</members>
+        <members>NIS2_Incident_OnCreate</members>
+        <members>NIS2_Measure_OnInProgress</members>
+        <members>NIS2_Training_Generate</members>
+        <members>NIS2_Decision_OnInReview</members>
+        <members>NIS2_Decision_SetApprovedAt</members>
+        <members>dummyFlow</members>
+        <name>Flow</name>
     </types>
     <version>65.0</version>
 </Package>
