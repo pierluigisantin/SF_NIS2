@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <label>Incident Summary</label>
     <length>32768</length>
-    <required>true</required>
+
     <type>LongTextArea</type>
     <visibleLines>5</visibleLines>
 </CustomField>

@@ -6,8 +6,7 @@
     <required>false</required>
     <type>Lookup</type>
     <referenceTo>NIS2_Register__c</referenceTo>
-    <relationshipLabel>Related Decisions</relationshipLabel>
-    <relationshipName>Decisions</relationshipName>
-    <relationshipOrder>0</relationshipOrder>
-    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <relationshipLabel>Related Measure</relationshipLabel>
+    <relationshipName>Related_Measures</relationshipName>
+
 </CustomField>

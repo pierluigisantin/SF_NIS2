@@ -8,9 +8,7 @@
     <referenceTo>NIS2_Register__c</referenceTo>
     <relationshipLabel>Related Decisions</relationshipLabel>
     <relationshipName>Decisions</relationshipName>
-    <relationshipOrder>0</relationshipOrder>
-    <reparentableMasterDetail>false</reparentableMasterDetail>
+
     <trackTrending>false</trackTrending>
-    <type>MasterDetail</type>
-    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+  
 </CustomField>

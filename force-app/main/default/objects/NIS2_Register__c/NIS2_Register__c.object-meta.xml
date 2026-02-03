@@ -87,7 +87,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>NIS2 Registers</pluralLabel>
-    <recordTypes/>
+    
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Consonant</startsWith>
 </CustomObject>
