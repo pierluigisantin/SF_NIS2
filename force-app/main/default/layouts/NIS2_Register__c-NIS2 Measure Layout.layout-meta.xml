@@ -116,35 +116,5 @@
             <posX>3</posX>
             <posY>0</posY>
         </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Adoption_Status__c</field>
-            <posX>0</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Adoption_Date__c</field>
-            <posX>1</posX>
-            <posY>1</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>NotAdopted_Justification__c</field>
-            <posX>2</posX>
-            <posY>1</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Related_Supplier__c</field>
-            <posX>3</posX>
-            <posY>1</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>CreatedById</field>
-            <posX>0</posX>
-            <posY>1</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>LastModifiedById</field>
-            <posX>1</posX>
-            <posY>1</posY>
-        </summaryLayoutItems>
     </summaryLayout>
 </Layout>

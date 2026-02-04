@@ -124,40 +124,5 @@
             <posX>3</posX>
             <posY>0</posY>
         </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Approval_Status__c</field>
-            <posX>2</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Approved_At__c</field>
-            <posX>1</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Evidence_Required__c</field>
-            <posX>3</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Related_Incident__c</field>
-            <posX>0</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>Related_Measure__c</field>
-            <posX>1</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>CreatedById</field>
-            <posX>3</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
-        <summaryLayoutItems>
-            <field>LastModifiedById</field>
-            <posX>4</posX>
-            <posY>0</posY>
-        </summaryLayoutItems>
     </summaryLayout>
 </Layout>
