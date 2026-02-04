@@ -5,7 +5,9 @@
     <errorConditionFormula>AND(
     ISBLANK(Related_Incident__c),
     ISBLANK(Related_Measure__c),
-    ISBLANK(Related_Supplier__c)
+    ISBLANK(Related_Supplier__c),
+    ISBLANK( Related_Account__c ),
+     contains(RecordType.DeveloperName ,&apos;ommunication&apos;)
 )</errorConditionFormula>
-    <errorMessage>At least one of Related Incident, Related Measure, or Related Supplier is required.</errorMessage>
+    <errorMessage>At least one of Related Incident, Related Measure, Related account or Related Supplier is required.</errorMessage>
 </ValidationRule>

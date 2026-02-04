@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Decision_Type__c</fullName>
-    <externalId>false</externalId>
     <label>Decision Type</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
@@ -12,14 +13,39 @@
             <value>
                 <fullName>Accept</fullName>
                 <default>false</default>
+                <label>Accept</label>
             </value>
             <value>
-                <fullName>Reject</fullName>
+                <fullName>Policy</fullName>
                 <default>false</default>
+                <label>Policy</label>
+            </value>
+            <value>
+                <fullName>RiskAcceptance</fullName>
+                <default>false</default>
+                <label>RiskAcceptance</label>
+            </value>
+            <value>
+                <fullName>IncidentOversight</fullName>
+                <default>false</default>
+                <label>IncidentOversight</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
             </value>
             <value>
                 <fullName>Modify</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
+                <label>Modify</label>
+            </value>
+            <value>
+                <fullName>Reject</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Reject</label>
             </value>
         </valueSetDefinition>
     </valueSet>

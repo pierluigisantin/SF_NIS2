@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>CancelEdit</actionName>
         <formFactor>Large</formFactor>
         <type>Default</type>
@@ -8,6 +26,24 @@
     <actionOverrides>
         <actionName>CancelEdit</actionName>
         <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -22,6 +58,10 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
         <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
@@ -31,6 +71,24 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>New</actionName>
         <formFactor>Large</formFactor>
         <type>Default</type>
@@ -38,6 +96,10 @@
     <actionOverrides>
         <actionName>New</actionName>
         <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -52,6 +114,10 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
         <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
@@ -62,6 +128,10 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
         <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
@@ -70,62 +140,32 @@
         <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>NIS2 Register object</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
     <label>NIS2 Register</label>
     <nameField>
         <displayFormat>NIS2-{000000}</displayFormat>
         <label>NIS2 Register Name</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>NIS2 Registers</pluralLabel>
-    
-    <sharingModel>ReadWrite</sharingModel>
-    <startsWith>Consonant</startsWith>
-    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <recordTypes>
-        <fullName>Communication</fullName>
-        <active>true</active>
-        <label>Communication</label>
-        <layout>NIS2_Register__c-NIS2 Communication Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Decision</fullName>
-        <active>true</active>
-        <label>Decision</label>
-        <layout>NIS2_Register__c-NIS2 Decision Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>DPORequest</fullName>
-        <active>true</active>
-        <label>DPO Request</label>
-        <layout>NIS2_Register__c-NIS2 DPO Request Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Incident</fullName>
-        <active>true</active>
-        <label>Incident</label>
-        <layout>NIS2_Register__c-NIS2 Incident Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Measure</fullName>
-        <active>true</active>
-        <label>Measure</label>
-        <layout>NIS2_Register__c-NIS2 Measure Layout</layout>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Risk</fullName>
-        <active>true</active>
-        <label>Risk</label>
-        <layout>NIS2_Register__c-NIS2 Risk Layout</layout>
-    </recordTypes>
+    <searchLayouts>
+        <searchResultsAdditionalFields>RECORDTYPE</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

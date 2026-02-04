@@ -3,10 +3,9 @@
     <fullName>Measure_Adopted_Req_Adoption_Date</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-      RecordType.DeveloperName = "Measure",
-      ISPICKVAL(Adoption_Status__c, "Adopted"),
+      RecordType.DeveloperName = &quot;Measure&quot;,
+      ISPICKVAL(Adoption_Status__c, &quot;Adopted&quot;),
       ISBLANK(Adoption_Date__c)
-    )
-</errorConditionFormula>
-    <errorMessage>When Adoption Status is "Adopted", Adoption Date is required.</errorMessage>
+    )</errorConditionFormula>
+    <errorMessage>When Adoption Status is &quot;Adopted&quot;, Adoption Date is required.</errorMessage>
 </ValidationRule>

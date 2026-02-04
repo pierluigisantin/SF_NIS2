@@ -4,13 +4,13 @@
     <active>true</active>
     <errorConditionFormula>AND(
     OR(
-        ISPICKVAL(DPO_Status__c, "Answered"),
-        ISPICKVAL(DPO_Status__c, "Closed")
+        ISPICKVAL(DPO_Status__c, &quot;Answered&quot;),
+        ISPICKVAL(DPO_Status__c, &quot;Closed&quot;)
     ),
     OR(
         ISBLANK(Answer__c),
         ISBLANK(Answered_At__c)
     )
 )</errorConditionFormula>
-    <errorMessage>When DPO Status is "Answered" or "Closed", both Answer and Answered At are required.</errorMessage>
+    <errorMessage>When DPO Status is &quot;Answered&quot; or &quot;Closed&quot;, both Answer and Answered At are required.</errorMessage>
 </ValidationRule>

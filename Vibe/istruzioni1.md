@@ -64,6 +64,10 @@ Alla fine della fase 0, fermati.
 Path:
 - `objects/Account/recordTypes/NIS2_Entity.recordType-meta.xml`
 
+Crea anche un record Type "Azienda" sempre su account per registrare le aziende che hanno rapporti con l'azienda principale che ha record type `NIS2_Entity`
+
+NON FARE CAMPI CUSTOM REQUIRED SU NIS2_Entity. Il fatto che un campo sia required su un particolare Record Type di NIS2_Entity deve essere gestito come validation rule
+
 ### 1.2 Campi custom su Account (minimi)
 Crea questi fields (label ITA, API name ESATTI):
 imposta required solo su RecordType NIS2_Entity
@@ -520,26 +524,33 @@ Se non riesci a generare un flow deployabile dopo 4-5 tentativi, fai un flow min
 
 ---
 
+# FASE 7 — Flow automazioni (istruzioni “anti-generico” per Vibe Coding)
+> Scopo di questa versione: evitare Flow vuoti o “scheletri”.
+> Per **ogni Flow** ci sono:
+> 1) **Spiegazione umana** (cosa deve fare, perché, cosa deve produrre)
+> 2) **Blueprint tecnico** (elementi, risorse, e soprattutto **come collegarli**)
+
+---
+
 ## 7.0 Standard di qualità (OBBLIGATORIO) — Naming, commenti, manutenzione
+
 ### 7.0.1 Naming Flow (API)
 - Prefisso fisso: `NIS2_`
 - Suffix descrittivo: es. `_OnCreate`, `_Scheduled`, `_SetApprovedAt`
 
 ### 7.0.2 Naming elementi nel Flow (OBBLIGATORIO)
-Usa un prefisso per tipo elemento, per cercare velocemente nella canvas:
-- `GET_` per Get Records
-- `DEC_` per Decision
-- `ASG_` per Assignment
-- `LOOP_` per Loop
-- `CRE_` per Create Records
-- `UPD_` per Update Records
-- `SUB_` per Subflow
-- `SCR_` per Screen (in fase 8/9)
-- `TXT_` per Text Template
-- `COL_` per Collection
-- `VAR_` per variabili (Flow resources)
-- `FORM_` per formule
-- `ERR_` per rami di errore / fallback
+Usa un prefisso per tipo elemento:
+- `GET_` Get Records
+- `DEC_` Decision
+- `ASG_` Assignment
+- `LOOP_` Loop
+- `CRE_` Create Records
+- `UPD_` Update Records
+- `SUB_` Subflow
+- `TXT_` Text Template
+- `VAR_` Variable
+- `FORM_` Formula
+- `ERR_` Error/fallback branch
 
 Esempi:
 - `GET_Account_ById`
@@ -549,396 +560,268 @@ Esempi:
 - `TXT_TaskDesc_IncidentTriage`
 
 ### 7.0.3 Commenti (OBBLIGATORI) dentro il Flow
-Per ogni elemento, compilare **Description** (o “Notes/Description” dell’elemento) con questo formato:
-
-**Header standard:**
-- **Purpose:** (1 riga)
-- **Inputs:** (variabili/field letti)
-- **Outputs:** (field/record creati/aggiornati)
-- **Assumptions:** (fallback, default)
-- **Change log:** (data + breve nota)
-
-Esempio Description:
-- Purpose: crea Task triage per incidente nuovo
-- Inputs: $Record, Related_Account__c, Severity__c, Account.Point_of_Contact_User__c
-- Outputs: Task (Training/Action)
-- Assumptions: owner fallback CSIRT se PoC null
-- Change log: 2026-02-03 initial
+Per **ogni elemento**, compilare Description con:
+- **Purpose:** 1 riga
+- **Inputs:** variabili/campi letti
+- **Outputs:** record/campi creati/aggiornati
+- **Assumptions:** fallback/default
+- **Change log:** data + nota
 
 ### 7.0.4 Commenti a livello Flow (OBBLIGATORI)
-Nel campo Description del Flow mettere:
-- Scope (cosa fa / cosa non fa)
-- Triggering conditions
-- Dipendenze (campi, record types)
+Nel Description del Flow indicare:
+- Scope (fa / non fa)
+- Trigger conditions
+- Dipendenze (campi/RT)
 - Owner logic
 - Dedup logic
-- Link a eventuale README interno (se esiste)
 
-### 7.0.5 “Sezione di Manutenzione” nei Flow (OBBLIGATORIA)
-Aggiungere un **Text Template** chiamato:
-- `TXT_MAINTENANCE_NOTES`
-contenente (testo fisso):
-- elenco campi usati
+### 7.0.5 Text Template manutenzione (OBBLIGATORIO)
+Creare sempre `TXT_MAINTENANCE_NOTES` (non mostrato a utenti) con:
+- campi usati
 - record types usati
-- punti dove cambiare scadenze/valori picklist
-- regole di dedup
+- dove cambiare milestone/valori
+- dedup rules
 - TODO futuri
-
-Questo text template NON viene “mostrato” all’utente: serve come blocco documentale interno al flow.
 
 ---
 
 ## Regole generali (valgono per tutti i Flow)
-- Tutti i Flow in `force-app/main/default/flows/`
-- Condizioni su RecordType: usare `RecordType.DeveloperName` (NO RecordTypeId)
-- Notifiche: preferire Task; email alert opzionale e sempre con fallback
-- Owner Task:
-  - 1) `Account.Point_of_Contact_User__c`
-  - 2) `Account.CSIRT_Lead_User__c`
-  - 3) `$User.Id` (ultimo fallback)
-- Dedup: prima di creare Task fare `GET_Existing_Open_Task_*` per evitare duplicati
+- Condizioni su RT: usare `RecordType.DeveloperName` (NO RecordTypeId hardcoded)
+- Notifiche: creare **Task** (email opzionali in future fasi)
+- Owner Task: PoC -> CSIRT -> `$User.Id`
+- Dedup: prima di creare Task, fare sempre un `GET_Existing_Open_Task_*` + `DEC_Task_Exists`
 
 ---
 
-## 7.1 `NIS2_ACN_Reminder_Scheduled` (Scheduled-Triggered Flow su Account)
-### Entry Criteria (Account)
-- `RecordType.DeveloperName = "NIS2_Entity"`
-- `ACN_Next_Due_Date__c != NULL`
-- `ACN_Qualification_Status__c IN ("InScope","InReview")`
+# 7.1 Flow — `NIS2_ACN_Reminder_Scheduled` (Scheduled-Triggered Flow su Account)
+
+## Spiegazione “umana” (cosa deve fare)
+Ogni mattina il sistema controlla tutti gli **Account NIS2 (record type NIS2_Entity)** che:
+- hanno una prossima scadenza ACN (`ACN_Next_Due_Date__c`) valorizzata
+- sono ancora “in perimetro” o in revisione (`InScope` o `InReview`)
+
+Per ognuno calcola quanti giorni mancano alla scadenza (**DaysToDue**).  
+Solo in alcuni giorni “milestone” (30,14,7,1,0,-1,-7) deve:
+1) determinare l’owner della task (PoC, altrimenti CSIRT, altrimenti utente corrente)
+2) verificare che **non esista già** una task aperta di reminder simile (dedup)
+3) creare una Task di promemoria con subject e description standard
+4) uscire senza creare duplicati negli altri giorni
+
+> Nota: la dedup serve per evitare che lo schedule giornaliero crei task identiche.
+
+## Blueprint tecnico (risorse + elementi + collegamenti)
+
+### Start (Scheduled)
+- Object: `Account`
+- Entry criteria:
+  - `RecordType.DeveloperName = "NIS2_Entity"`
+  - `ACN_Next_Due_Date__c != null`
+  - `(ACN_Qualification_Status__c = "InScope") OR (ACN_Qualification_Status__c = "InReview")`
 
 ### Risorse (OBBLIGATORIE)
 - `FORM_DaysToDue` (Formula Number): `ACN_Next_Due_Date__c - TODAY()`
-- `COL_ReminderMilestones` (Text Collection): `30,14,7,1,0,-1,-7` (implementa come Decision chain se collection non disponibile)
 - `VAR_OwnerId` (Text)
-- `TXT_TaskSubject_ACNReminder`
-- `TXT_TaskDesc_ACNReminder`
-- `TXT_MAINTENANCE_NOTES` (vedi standard)
+- `TXT_TaskSubject_ACNReminder`: `[NIS2] Scadenza ACN tra {!FORM_DaysToDue} giorni - {!$Record.Name}`
+- `TXT_TaskDesc_ACNReminder`: include NextDue + QualificationStatus
+- `TXT_MAINTENANCE_NOTES`
 
-### Elementi (ordine consigliato)
-1) `ASG_Set_Owner_PoC_Or_CSIRT`  
-   - Description completa (Purpose/Inputs/Outputs/Assumptions/Changelog)
-2) `DEC_Is_Milestone_Day` (Decision)
-   - rami: 30/14/7/1/0/-1/-7/Default
-3) Per ciascun ramo milestone:
-   - `GET_Existing_Open_Task_ACNReminder`
-   - `DEC_Task_Exists?`
-   - `CRE_Task_ACNReminder` (se non esiste)
+### Elementi (OBBLIGATORI, con nomi ESATTI)
+1) `ASG_Set_Owner_PoC_Or_CSIRT`
+   - logic:
+     - if `$Record.Point_of_Contact_User__c` not null => `VAR_OwnerId = $Record.Point_of_Contact_User__c`
+     - else if `$Record.CSIRT_Lead_User__c` not null => `VAR_OwnerId = $Record.CSIRT_Lead_User__c`
+     - else `VAR_OwnerId = $User.Id`
+2) `DEC_Is_Milestone_Day`
+   - rami: `30/14/7/1/0/-1/-7`
+   - default: termina (nessuna task)
+3) `GET_Existing_Open_Task_ACNReminder`
+   - object: Task
+   - filtri:
+     - `WhatId = $Record.Id`
+     - `Subject CONTAINS "[NIS2] Scadenza ACN"`
+     - `Status != "Completed"` (o `!= "Closed"` se la tua org usa Closed)
+     - `Task_Category__c = "Action"`
+   - first record only
+4) `DEC_Task_Exists`
+   - se task trovata => End (skip)
+   - se task non trovata => crea task
+5) `CRE_Task_ACNReminder`
+   - crea Task:
+     - `WhatId = $Record.Id`
+     - `OwnerId = VAR_OwnerId`
+     - `ActivityDate = TODAY()` (oppure `$Record.ACN_Next_Due_Date__c` se vuoi)
+     - `Subject = TXT_TaskSubject_ACNReminder`
+     - `Description = TXT_TaskDesc_ACNReminder`
+     - `Status = "Not Started"`
+     - `Task_Category__c = "Action"`
+     - `Priority` = `"High"` se `FORM_DaysToDue <= 7` else `"Normal"` (NON usare numero in Priority)
 
-### Dati Task creato
-- Subject: `"[NIS2] Scadenza ACN tra {!FORM_DaysToDue} giorni - {!$Record.Name}"`
-- ActivityDate: `TODAY()` (oppure `ACN_Next_Due_Date__c` se DaysToDue>0)
-- OwnerId: `VAR_OwnerId`
-- WhatId: `$Record.Id`
-- Priority: High se DaysToDue<=7 else Normal
-- Status: Not Started
-- Task_Category__c: `Action`
-- Description: include NextDue e QualificationStatus
+### Collegamenti (OBBLIGATORI)
+`Start`
+→ `ASG_Set_Owner_PoC_Or_CSIRT`
+→ `DEC_Is_Milestone_Day`
+
+- Per ciascun ramo milestone (30/14/7/1/0/-1/-7):
+  → `GET_Existing_Open_Task_ACNReminder`
+  → `DEC_Task_Exists`
+    - Yes (exists) → `End`
+    - No (not exists) → `CRE_Task_ACNReminder` → `End`
+
+- Default di `DEC_Is_Milestone_Day` → `End`
 
 ---
 
-## 7.2 `NIS2_Incident_OnCreate` (After-save, create, RT Incident)
-### Entry Criteria
-- Object: `NIS2_Register__c`
-- When: After Save
-- On: Create
-- Condition: `RecordType.DeveloperName = "Incident"`
+# 7.2 Flow — `NIS2_Incident_OnCreate` (Record-Triggered After Save, Create, RT Incident)
 
-### Risorse
-- `VAR_AccountId` (Text) = `$Record.Related_Account__c`
+## Spiegazione “umana”
+Quando viene creato un record `NIS2_Register__c` di tipo **Incident**, il sistema deve:
+1) capire a quale Ente (Account) si riferisce (`Related_Account__c`)
+2) scegliere l’owner operativo per le attività (PoC → CSIRT → utente corrente)
+3) creare una task di **triage immediato** per gestire l’incidente
+4) creare una task per la **notifica entro 72 ore** (scadenza calcolata)
+5) se l’incidente coinvolge dati personali, creare anche una task per avviare la valutazione “DPO / data breach”
+6) evitare duplicati per la task di triage (se l’automazione venisse rilanciata per errore)
+
+## Blueprint tecnico
+
+### Start
+- Object: `NIS2_Register__c`
+- Trigger: After Save
+- Run: only when record is created
+- Entry criteria: `RecordType.DeveloperName = "Incident"`
+
+### Risorse (OBBLIGATORIE)
+- `VAR_AccountId` (Text): `$Record.Related_Account__c`
 - `VAR_OwnerId` (Text)
-- `TXT_TaskDesc_IncidentTriage`
+- `TXT_TaskDesc_IncidentTriage` (include canale, aware_at, severity, summary)
 - `TXT_TaskDesc_IncidentNotify72h`
 - `TXT_MAINTENANCE_NOTES`
 
-### Elementi (ordine consigliato)
-1) `GET_Account_ForIncident`
-2) `ASG_Set_Owner_PoC_Or_CSIRT`
-3) `CRE_Task_Triage_Incident`
-4) `DEC_PersonalData_Involved`
-   - If Yes:
-     - `CRE_Task_DPO_Assessment`
-5) `CRE_Task_Notify_72h`
+### Elementi (nomi ESATTI)
+1) `GET_Account_ForIncident` (Get Account by `VAR_AccountId`)
+2) `ASG_Set_Owner_PoC_Or_CSIRT` (Owner fallback da Account)
+3) `GET_Existing_Open_Task_Triage` (dedup)
+4) `DEC_Triage_Task_Exists`
+5) `CRE_Task_Triage_Incident` (solo se non esiste)
+6) `CRE_Task_Notify_72h` (sempre)
+7) `DEC_PersonalData_Involved`
+8) `CRE_Task_DPO_Assessment` (solo ramo Yes)
 
-### Task richiesti
-- Triage:
-  - Subject: `"[NIS2] Triage incidente - {!$Record.Name}"`
-  - WhatId: Account.Id
-  - OwnerId: VAR_OwnerId
-  - Task_Category__c: Action
-  - Priority: High se Severity in High/Critical
-- DPO Assessment (se Yes):
-  - Subject: `"[NIS2] Valutare data breach (DPO) - {!$Record.Name}"`
-  - OwnerId: VAR_OwnerId (o CSIRT)
-  - Task_Category__c: EvidenceRequest (o Action)
-- Notifica 72h:
-  - Subject: `"[NIS2] Notifica incidente entro 72h - {!$Record.Name}"`
-  - ActivityDate: `DATEVALUE($Record.Aware_At__c) + 3`
-  - Task_Category__c: Action
+### Collegamenti (OBBLIGATORI)
+`Start`
+→ `GET_Account_ForIncident`
+→ `ASG_Set_Owner_PoC_Or_CSIRT`
+→ `GET_Existing_Open_Task_Triage`
+→ `DEC_Triage_Task_Exists`
 
----
+- Branch “exists” → `CRE_Task_Notify_72h` → `DEC_PersonalData_Involved`
+- Branch “not exists” → `CRE_Task_Triage_Incident` → `CRE_Task_Notify_72h` → `DEC_PersonalData_Involved`
 
-## 7.3 `NIS2_Measure_OnInProgress` (After-save, update, RT Measure)
-### Entry Criteria
-- RecordType.DeveloperName = "Measure"
-- IsChanged(Adoption_Status__c) = true
-- Adoption_Status__c = "InProgress"
-
-### Elementi
-1) `GET_Account_ForMeasure`
-2) `ASG_Set_Owner_PoC_Or_CSIRT`
-3) `GET_Existing_Open_Task_ImplementMeasure`
-4) `DEC_Task_Exists?`
-5) `CRE_Task_ImplementMeasure`
-6) `DEC_Has_Supplier`
-   - `CRE_Task_ContactSupplier` (dedup opzionale)
-
-### Task
-- Implementazione misura: subject `"[NIS2] Implementare misura - {!$Record.Name}"`, category Action
-- Coinvolgere fornitore: subject `"[NIS2] Coinvolgere fornitore - {!$Record.Name}"`, category Action
+`DEC_PersonalData_Involved`
+- Yes → `CRE_Task_DPO_Assessment` → End
+- No → End
 
 ---
 
-## 7.4 `NIS2_Training_Generate` (Autolaunched invocable)
-### Inputs
-- `in_AccountId` (Text, required)
-- `in_DueDays` (Number, default 30)
-- `in_AssignToUserId` (Text, optional)
+# 7.3 Flow — `NIS2_Measure_OnInProgress` (Record-Triggered After Save, Update, RT Measure)
 
-### Outputs
-- `out_TasksCreated` (Number)
+## Spiegazione “umana”
+Quando una misura (record type **Measure**) passa a stato **InProgress**, il sistema deve:
+1) identificare l’Ente collegato
+2) assegnare l’owner operativo (PoC/CSIRT)
+3) creare una task “Implementare misura” (solo una volta, dedup)
+4) se c’è un fornitore collegato, creare una task aggiuntiva “Coinvolgere fornitore” (opzionale con dedup)
 
-### Elementi
-1) `GET_Account_ById`
-2) `DEC_Is_NIS2_Entity`
-3) `ASG_Set_Owner_Default` (owner = in_AssignToUserId else PoC else CSIRT else $User.Id)
-4) `GET_BoardContacts` (Contact where AccountId = in_AccountId AND Is_Board_Member__c = true)
-5) `LOOP_BoardContacts`
-   - `GET_Existing_Open_Task_Training_{ContactId}` (dedup per contact)
-   - `DEC_Task_Exists?`
-   - `CRE_Task_Training_BoardMember`
-   - `ASG_Increment_out_TasksCreated`
-6) `DEC_Has_AssignToUser`
-   - `CRE_Task_Training_Coordination`
-
-### Task Training
-- Subject: `"[NIS2] Formazione CdA - {!CurrentContact.Name}"`
-- WhatId: Account
-- OwnerId: owner calcolato
-- ActivityDate: TODAY() + in_DueDays
-- Task_Category__c: Training
-- Description: include ContactId, note tracciamento completamento
+## Blueprint tecnico (collegamenti)
+`Start`
+→ `GET_Account_ForMeasure`
+→ `ASG_Set_Owner_PoC_Or_CSIRT`
+→ `GET_Existing_Open_Task_ImplementMeasure`
+→ `DEC_Task_Exists`
+- Yes → `DEC_Has_Supplier` → (se supplier) `CRE_Task_ContactSupplier` → End
+- No  → `CRE_Task_ImplementMeasure` → `DEC_Has_Supplier` → (se supplier) `CRE_Task_ContactSupplier` → End
 
 ---
 
-## 7.5 `NIS2_Decision_OnInReview` (After-save update, RT Decision)
-### Entry Criteria
-- RecordType.DeveloperName = "Decision"
-- IsChanged(Approval_Status__c) = true
-- Approval_Status__c = "InReview"
+# 7.4 Flow — `NIS2_Training_Generate` (Autolaunched Invocable)
 
-### Elementi
-1) `DEC_Has_Approver`
-   - If no: `CRE_Task_MissingApprover` (owner PoC/CSIRT) e termina
-2) `GET_Account_ForDecision`
-3) `CRE_Task_ApprovalRequest` (Owner Approver_User__c, due TODAY+7)
-4) (Opzionale) email alert se configurato; sempre con fallback Task
+## Spiegazione “umana”
+Questo flow serve per “generare in blocco” le attività di formazione.  
+Dato un Account NIS2:
+1) controlla che sia un Ente NIS2
+2) recupera i Contact con flag CdA
+3) per ciascun CdA crea una task di formazione con scadenza X giorni
+4) opzionalmente crea una task di coordinamento a un utente specifico
+5) restituisce quante task ha creato
+
+## Blueprint tecnico (collegamenti)
+`Start (Autolaunched)`
+→ `GET_Account_ById`
+→ `DEC_Is_NIS2_Entity`
+- No → End
+- Yes → `ASG_Set_Owner_Default`
+→ `GET_BoardContacts`
+→ `LOOP_BoardContacts`
+   → `GET_Existing_Open_Task_Training_ForContact`
+   → `DEC_Task_Exists`
+      - Yes → next loop
+      - No  → `CRE_Task_Training_BoardMember` → `ASG_Increment_out_TasksCreated` → next loop
+→ `DEC_Has_AssignToUser`
+   - Yes → `CRE_Task_Training_Coordination` → End
+   - No  → End
 
 ---
 
-## 7.6 `NIS2_Decision_SetApprovedAt` (Before-save update, RT Decision)
-### Entry Criteria
-- RecordType.DeveloperName = "Decision"
-- IsChanged(Approval_Status__c) = true
-- Approval_Status__c IN ("Approved","Rejected")
+# 7.5 Flow — `NIS2_Decision_OnInReview` (After Save Update, RT Decision)
 
-### Elementi
-1) `DEC_ApprovedAt_IsBlank`
-2) `ASG_Set_ApprovedAt_Now` (set `$Record.Approved_At__c = NOW()`)
-3) `DEC_Is_Approved_And_EvidenceRequired`
-   - `CRE_Task_RequestEvidence` (owner PoC/CSIRT, category EvidenceRequest)
+## Spiegazione “umana”
+Quando una Decision passa a `InReview`, deve partire un “ping” operativo:
+1) se manca l’approvatore, crea una task al PoC per completare i dati
+2) se c’è l’approvatore, crea una task assegnata all’approvatore (membro CdA licenziato)
+3) la task deve spiegare cosa fare: cambiare status Approved/Rejected e inserire commento se reject
+
+## Blueprint tecnico (collegamenti)
+`Start`
+→ `DEC_Has_Approver`
+- No → `CRE_Task_MissingApprover` → End
+- Yes → `GET_Account_ForDecision` → `CRE_Task_ApprovalRequest` → End
+
+---
+
+# 7.6 Flow — `NIS2_Decision_SetApprovedAt` (Before Save Update, RT Decision)
+
+## Spiegazione “umana”
+Quando l’approvatore imposta Approved o Rejected:
+1) se il timestamp `Approved_At__c` è vuoto, viene valorizzato con NOW()
+2) se Approved e “Evidence required” (se esiste flag), viene generata una task per caricare evidenze (senza controllare file in questa fase)
+
+## Blueprint tecnico (collegamenti)
+`Start`
+→ `DEC_ApprovedAt_IsBlank`
+- Yes → `ASG_Set_ApprovedAt_Now`
+- No  → (prosegue)
+→ `DEC_Is_Approved_And_EvidenceRequired`
+- Yes → `CRE_Task_RequestEvidence` → End
+- No  → End
 
 ---
 
 ## Deploy & Test (obbligatorio a fine fase)
-### Deploy
-- `sf project deploy start --target-org nis2dev --source-dir force-app/main/default/flows`
-
-
-
-## Stop condition
-Alla fine della fase 7, fermati.
+- Deploy: `sf project deploy start --target-org nis2dev --source-dir force-app/main/default/flows`
+- Alla fine della fase 7: **STOP** (non proseguire con fasi successive).
 
 ---
 
-# FASE 8 — Evidenze “file obbligatorio” (A e fallback B)
-## Deliverable
-8A: Flow before-save con AddError che verifica ContentDocumentLink  
-8B: fallback Quick Action + Screen Flow
 
-## Stop condition
-Alla fine della fase 8, fermati.
+
 
 ---
 
-# FASE 9 — Page Layouts (NUOVA)
-## Obiettivo
-Creare Page Layout specifici per:
-- Account RT `NIS2_Entity`
-- `NIS2_Register__c` per ogni Record Type (Incident, Measure, Risk, Communication, DPORequest, Decision)
-- (opz.) Task layout “Training” (se fattibile via layout) e Contact layout CdA
-
-## Deliverable (metadata in `layouts/`)
-### 9.1 Account Layout per Ente NIS2
-Crea layout:
-- **Label:** `Account Layout - Ente NIS2`
-- **API/Layout name:** `Account-Account Layout - Ente NIS2`
-Includi sezioni:
-1) **Governance e ruoli**
-   - NIS_Category__c
-   - ACN_Qualification_Status__c
-   - Point_of_Contact_User__c / Deputy_PoC_Contact__c
-   - CSIRT_Lead_User__c / Deputy_CSIRT_Contact__c
-2) **Scadenze**
-   - ACN_Last_Confirmation_Date__c
-   - ACN_Next_Due_Date__c
-3) **Note**
-   - NIS2_Notes__c
-4) Related Lists (mostra almeno):
-   - `NIS2 Registers` (tutte le related list su NIS2_Register__c)
-   - `Activities`
-   - `Files`
-
-Path:
-- `layouts/Account-Account Layout - Ente NIS2.layout-meta.xml`
-
-Assegna layout al Record Type `NIS2_Entity` (via recordType layoutAssignments nell’object metadata se necessario).
-
-### 9.2 Layout `NIS2_Register__c` — Incident
-- Label: `NIS2 Register Layout - Incident`
-- Layout name: `NIS2_Register__c-NIS2 Register Layout - Incident`
-Sezioni:
-1) **Dettagli incidente**
-   - Related_Account__c
-   - Detected_Channel__c
-   - Aware_At__c
-   - Severity__c
-   - Status__c
-   - Personal_Data_Involved__c
-2) **Regimi**
-   - Regime_NIS2__c
-   - Regime_Parallel__c
-3) **Sintesi**
-   - Incident_Summary__c
-4) **Relazioni**
-   - Related_Supplier__c
-5) Related Lists:
-   - Activities
-   - Files
-   - Comunicazioni (filtrabili: per ora almeno related list generale su NIS2_Register__c)
-
-Path:
-- `layouts/NIS2_Register__c-NIS2 Register Layout - Incident.layout-meta.xml`
-
-### 9.3 Layout `NIS2_Register__c` — Measure
-- Layout name: `NIS2_Register__c-NIS2 Register Layout - Measure`
-Sezioni:
-- Related_Account__c
-- Measure_Code__c
-- Measure_Class__c
-- Adoption_Status__c
-- Adoption_Date__c
-- NotAdopted_Justification__c
-- Related_Supplier__c
-Related Lists: Activities, Files
-
-Path:
-- `layouts/NIS2_Register__c-NIS2 Register Layout - Measure.layout-meta.xml`
-
-### 9.4 Layout `NIS2_Register__c` — Risk
-- Layout name: `NIS2_Register__c-NIS2 Register Layout - Risk`
-Sezioni:
-- Related_Account__c
-- Risk_Category__c
-- Risk_Impact__c
-- Risk_Status__c
-- Risk_Description__c
-- Related_Measure__c
-Related Lists: Activities, Files
-
-Path:
-- `layouts/NIS2_Register__c-NIS2 Register Layout - Risk.layout-meta.xml`
-
-### 9.5 Layout `NIS2_Register__c` — Communication
-- Layout name: `NIS2_Register__c-NIS2 Register Layout - Communication`
-Sezioni:
-- Related_Account__c
-- Direction__c
-- Channel__c
-- Recipient_Type__c
-- Occurred_At__c
-- Protocol_Number__c
-- Summary__c
-- Related_Incident__c / Related_Measure__c / Related_Supplier__c
-Related Lists: Files
-
-Path:
-- `layouts/NIS2_Register__c-NIS2 Register Layout - Communication.layout-meta.xml`
-
-### 9.6 Layout `NIS2_Register__c` — DPORequest
-- Layout name: `NIS2_Register__c-NIS2 Register Layout - DPORequest`
-Sezioni:
-- Related_Account__c
-- Related_Incident__c
-- DPO_User__c
-- DPO_Status__c
-- Question__c
-- Answer__c
-- Answered_At__c
-Related Lists: Files, Activities
-
-Path:
-- `layouts/NIS2_Register__c-NIS2 Register Layout - DPORequest.layout-meta.xml`
-
-### 9.7 Layout `NIS2_Register__c` — Decision
-- Layout name: `NIS2_Register__c-NIS2 Register Layout - Decision`
-Sezioni:
-- Related_Account__c
-- Decision_Type__c
-- Approver_User__c
-- Approval_Status__c
-- Approved_At__c
-- Approval_Comment__c
-- Evidence_Required__c
-- Related_Incident__c / Related_Measure__c
-Related Lists: Files, Activities
-
-Path:
-- `layouts/NIS2_Register__c-NIS2 Register Layout - Decision.layout-meta.xml`
-
-### 9.8 Assegnazione layout ai record type
-Aggiorna `objects/NIS2_Register__c/NIS2_Register__c.object-meta.xml` (o file dedicati se necessario) per assegnare:
-- Incident -> Layout Incident
-- Measure -> Layout Measure
-- Risk -> Layout Risk
-- Communication -> Layout Communication
-- DPORequest -> Layout DPORequest
-- Decision -> Layout Decision
-
-## Stop condition
-Alla fine della fase 9, fermati.
+.
 
 ---
 
-# FASE 10 — UI minima (Lightning App / Flexipage) (opzionale)
-(come da versione precedente)
 
----
-
-# FASE 11 — CHECK di deploy e mini-UAT per fase
-Dopo ogni fase includi:
-- `sf project deploy start --target-org nis2dev`
-- elenco file creati
-- 3 test rapidi della fase
 
 ---
 

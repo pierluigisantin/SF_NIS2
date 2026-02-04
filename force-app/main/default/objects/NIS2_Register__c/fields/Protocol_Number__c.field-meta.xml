@@ -3,8 +3,10 @@
     <fullName>Protocol_Number__c</fullName>
     <externalId>false</externalId>
     <label>Protocol Number</label>
-    <required>false</required>
-    <type>Text</type>
     <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

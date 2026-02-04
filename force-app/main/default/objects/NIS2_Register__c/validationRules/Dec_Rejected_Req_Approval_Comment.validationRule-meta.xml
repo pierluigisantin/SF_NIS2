@@ -3,8 +3,8 @@
     <fullName>Dec_Rejected_Req_Approval_Comment</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-    ISPICKVAL(Approval_Status__c, "Rejected"),
+    ISPICKVAL(Approval_Status__c, &quot;Rejected&quot;),
     ISBLANK(Approval_Comment__c)
 )</errorConditionFormula>
-    <errorMessage>When Approval Status is "Rejected", Approval Comment is required.</errorMessage>
+    <errorMessage>When Approval Status is &quot;Rejected&quot;, Approval Comment is required.</errorMessage>
 </ValidationRule>

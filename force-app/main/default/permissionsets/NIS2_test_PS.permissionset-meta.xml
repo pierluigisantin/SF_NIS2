@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>NIS2_test</label>
+    <description>Test permission set for identifying problematic fields</description>
+    
+    <!-- Object Permissions -->
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <viewAllRecords>false</viewAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>NIS2_Register__c</object>
+    </objectPermissions>
+    
+    <!-- Field Permissions for NIS2_Register__c - Start with just one field -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NIS2_Register__c.Related_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+</PermissionSet>

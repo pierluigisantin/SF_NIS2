@@ -2,13 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Deputy_CSIRT_Contact__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <externalId>false</externalId>
     <label>Vice CSIRT (Contatto)</label>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Vice CSIRT</relationshipLabel>
     <relationshipName>Deputy_CSIRT_Contact</relationshipName>
-    <reparentableMasterDetail>false</reparentableMasterDetail>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>

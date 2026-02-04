@@ -3,8 +3,8 @@
     <fullName>Meas_NotApplicable_Req_Justification</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-    ISPICKVAL(Adoption_Status__c, "NotApplicable"),
+    ISPICKVAL(Adoption_Status__c, &quot;NotApplicable&quot;),
     ISBLANK(NotAdopted_Justification__c)
 )</errorConditionFormula>
-    <errorMessage>When Adoption Status is "NotApplicable", Not Adopted Justification is required.</errorMessage>
+    <errorMessage>When Adoption Status is &quot;NotApplicable&quot;, Not Adopted Justification is required.</errorMessage>
 </ValidationRule>

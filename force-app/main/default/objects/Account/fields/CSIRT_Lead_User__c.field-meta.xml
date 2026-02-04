@@ -2,13 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CSIRT_Lead_User__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <externalId>false</externalId>
     <label>Referente CSIRT (Utente)</label>
     <referenceTo>User</referenceTo>
     <relationshipLabel>Referente CSIRT</relationshipLabel>
     <relationshipName>CSIRT_Lead_User</relationshipName>
-    <reparentableMasterDetail>false</reparentableMasterDetail>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Lookup</type>
 </CustomField>
