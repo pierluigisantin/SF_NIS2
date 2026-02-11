@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NIS2_Risk_Rating__c</fullName>
+    <label>Rating rischio NIS2</label>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>false</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Basso</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Medio</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Alto</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Critico</fullName>
+                <default>false</default>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NIS2_Questionnaire_Date__c</fullName>
+    <label>Data compilazione questionario NIS2</label>
+    <type>Date</type>
+</CustomField>

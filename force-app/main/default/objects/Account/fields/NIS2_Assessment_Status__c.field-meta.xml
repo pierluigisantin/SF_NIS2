@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NIS2_Assessment_Status__c</fullName>
+    <label>Stato valutazione NIS2</label>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>false</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Richiesto</fullName>
+                <default>true</default>
+            </value>
+            <value>
+                <fullName>Ricevuto</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>In revisione</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Approvato</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Approvato con remediation</fullName>
+                <default>false</default>
+            </value>
+            <value>
+                <fullName>Respinto</fullName>
+                <default>false</default>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
