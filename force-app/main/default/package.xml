@@ -1,16 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>NIS2_Register__c</members>
-        <name>CustomObject</name>
+        <members>Account.Nuovo_membo_Cda</members>
+        <members>Contact.Nuovo_membo_Cda</members>
+        <name>QuickAction</name>
     </types>
-<types>
-  <members>Activity.Task_Category__c</members>
-  <name>CustomField</name>
-</types>
+    <types>
+        <members>Account.ACN_Last_Confirmation_Date__c</members>
+        <members>Account.ACN_Next_Due_Date__c</members>
+        <members>Account.ACN_Qualification_Status__c</members>
+        <members>Account.CSIRT_Lead_User__c</members>
+        <members>Account.Deputy_CSIRT_Contact__c</members>
+        <members>Account.Deputy_PoC_Contact__c</members>
+        <members>Account.NIS_Category__c</members>
+        <members>Account.NIS2_Category_explanation__c</members>
+        <members>Account.NIS2_Notes__c</members>
+        <members>Account.NIS2Docs_Punto_di_Contatto__c</members>
+        <members>Account.NIS2Docs_Referente_CSIRT__c</members>
+        <members>Account.NIS2Docs_Storyboard_Organization__c</members>
+        <members>Account.Point_of_Contact_User__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Activity.Task_Category__c</members>
+        <name>CustomField</name>
+    </types>
     <types>
         <members>NIS2_Register__c.NotAdopted_Justification__c</members>
         <members>NIS2_Register__c.Adoption_Date__c</members>
+        <members>NIS2_Register__c.Adoption_Status__c</members>
+        <members>NIS2_Register__c.Answer__c</members>
+        <members>NIS2_Register__c.Answered_At__c</members>
+        <members>NIS2_Register__c.Approval_Comment__c</members>
+        <members>NIS2_Register__c.Approval_Status__c</members>
+        <members>NIS2_Register__c.Approved_At__c</members>
+        <members>NIS2_Register__c.Approver_User__c</members>
+        <members>NIS2_Register__c.Aware_At__c</members>
+        <members>NIS2_Register__c.Channel__c</members>
+        <members>NIS2_Register__c.DPO_Status__c</members>
+        <members>NIS2_Register__c.DPO_User__c</members>
+        <members>NIS2_Register__c.Decision_Type__c</members>
+        <members>NIS2_Register__c.Decision_description__c</members>
+        <members>NIS2_Register__c.Detected_Channel__c</members>
+        <members>NIS2_Register__c.Direction__c</members>
+        <members>NIS2_Register__c.Evidence_Required__c</members>
+        <members>NIS2_Register__c.Incident_Summary__c</members>
+        <members>NIS2_Register__c.Measure_Class__c</members>
+        <members>NIS2_Register__c.Measure_Code__c</members>
+        <members>NIS2_Register__c.Measure_description__c</members>
+        <members>NIS2_Register__c.Occurred_At__c</members>
+        <members>NIS2_Register__c.Personal_Data_Involved__c</members>
+        <members>NIS2_Register__c.Protocol_Number__c</members>
+        <members>NIS2_Register__c.Question__c</members>
+        <members>NIS2_Register__c.Recipient_Type__c</members>
+        <members>NIS2_Register__c.Regime_NIS2__c</members>
+        <members>NIS2_Register__c.Regime_Parallel__c</members>
+        <members>NIS2_Register__c.Related_Account__c</members>
+        <members>NIS2_Register__c.Related_Communication__c</members>
+        <members>NIS2_Register__c.Related_DPO_Requests__c</members>
+        <members>NIS2_Register__c.Related_Incident__c</members>
+        <members>NIS2_Register__c.Related_Measure__c</members>
+        <members>NIS2_Register__c.Related_Risk__c</members>
+        <members>NIS2_Register__c.Related_Supplier__c</members>
+        <members>NIS2_Register__c.Risk_Category__c</members>
+        <members>NIS2_Register__c.Risk_Description__c</members>
+        <members>NIS2_Register__c.Risk_Impact__c</members>
+        <members>NIS2_Register__c.Risk_Status__c</members>
+        <members>NIS2_Register__c.Severity__c</members>
+        <members>NIS2_Register__c.Status__c</members>
+        <members>NIS2_Register__c.Summary__c</members>
         <name>CustomField</name>
     </types>
     <types>
@@ -28,7 +86,51 @@
         <members>NIS2_Decision_OnInReview</members>
         <members>NIS2_Decision_SetApprovedAt</members>
         <members>dummyFlow</members>
+        <members>NIS2_Register_OnCreateUpdate</members>
         <name>Flow</name>
+    </types>
+    <types>
+        <members>NIS2_Register__c-NIS2 Communication Layout</members>
+        <members>NIS2_Register__c-NIS2 DPO Request Layout</members>
+        <members>NIS2_Register__c-NIS2 Decision Layout</members>
+        <members>NIS2_Register__c-NIS2 Incident Layout</members>
+        <members>NIS2_Register__c-NIS2 Measure Layout</members>
+        <members>NIS2_Register__c-NIS2 Risk Layout</members>
+        <members>Account-NIS2 Entity Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <members>B2B Reordering Portal Buyer Profile</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>NIS2_Register__c</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>NIS2</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>NIS2_admin</members>
+        <members>NIS2_admin_PS</members>
+        <members>NIS2_admin_PS_fixed</members>
+        <members>NIS2_admin_final</members>
+        <members>NIS2_BoardApprover_PS</members>
+        <members>NIS2_Coordinator_PS</members>
+        <members>NIS2_DPO_PS</members>
+        <members>NIS2_IncidentManager_PS</members>
+        <members>NIS2_simple_PS</members>
+        <members>NIS2_test_PS</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>AccountHandler</members>
+        <members>AccountTrigger</members>
+        <members>AccountHandlerTest</members>
+        <members>AccountTriggerTest</members>
+        <name>ApexClass</name>
     </types>
     <version>65.0</version>
 </Package>

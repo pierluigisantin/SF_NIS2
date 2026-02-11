@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Account.ACN_Last_Confirmation_Date__c</members>
+        <members>Account.ACN_Next_Due_Date__c</members>
+        <members>Account.ACN_Qualification_Status__c</members>
+        <members>Account.CSIRT_Lead_User__c</members>
+        <members>Account.Deputy_CSIRT_Contact__c</members>
+        <members>Account.Deputy_PoC_Contact__c</members>
+        <members>Account.NIS_Category__c</members>
+        <members>Account.NIS2_Category_explanation__c</members>
+        <members>Account.NIS2_Notes__c</members>
+        <members>Account.NIS2Docs_Punto_di_Contatto__c</members>
+        <members>Account.NIS2Docs_Referente_CSIRT__c</members>
+        <members>Account.NIS2Docs_Storyboard_Organization__c</members>
+        <members>Account.Point_of_Contact_User__c</members>
+        <name>CustomField</name>
+    </types>
+    <version>60.0</version>
+</Package>

@@ -100,13 +100,13 @@
                             <value>FULL_NAME</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CONTACT.PHONE1</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CONTACT.EMAIL</value>
-                        </valueListItems>
-                        <valueListItems>
                             <value>CONTACT.TITLE</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Membro_Cda_Attivo__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Data_cessazione_appartenza_Cda__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

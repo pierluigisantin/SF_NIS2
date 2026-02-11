@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ACN_Last_Confirmation_Date__c</fullName>
+    <fullName>Data_cessazione_appartenza_Cda__c</fullName>
     <externalId>false</externalId>
-    <label>Ultima conferma ACN</label>
+    <label>Data cessazione appartenza Cda</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackFeedHistory>false</trackFeedHistory>
     <type>Date</type>
 </CustomField>

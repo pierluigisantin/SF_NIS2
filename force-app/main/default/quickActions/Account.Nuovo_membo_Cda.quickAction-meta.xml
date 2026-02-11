@@ -4,6 +4,10 @@
         <field>Is_Board_Member__c</field>
         <formula>true</formula>
     </fieldOverrides>
+    <fieldOverrides>
+        <field>Membro_Cda_Attivo__c</field>
+        <formula>true</formula>
+    </fieldOverrides>
     <label>Nuovo membo Cda</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>

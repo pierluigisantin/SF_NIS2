@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Deputy_PoC_Contact__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
     <label>Vice PoC (Contatto)</label>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Vice PoC</relationshipLabel>
